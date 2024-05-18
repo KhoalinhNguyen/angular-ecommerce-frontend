@@ -12,6 +12,8 @@ export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
   currentCategoryId: number = 1;
+  currentCategoryName: string = "" ;
+  searchMode: boolean = false;
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute
@@ -25,21 +27,50 @@ export class ProductListComponent implements OnInit {
 
   listProduct() {
 
-    //check if "id" parameter is available
-    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
-    //route = activated routes, snapshot = routes at this given moment, 
-    //paramMap = Map of all the route parameters and read the id parameter
+    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+      //keyword is passed in from the search component
+
+    if(this.searchMode) {
+      this.handleSearchProducts();
+    }else {
+      this.handleListProducts();
+    }
+
+  }
+
+  handleSearchProducts() {
+
+    const theKeyWord = this.route.snapshot.paramMap.get('keyword')!;
+
+    // now search for the products using the keyword
+    this.productService.searchProducts(theKeyWord).subscribe(
+      data => {
+        this.products = data;
+      }
+    )
+  }
+
+  handleListProducts() {
+
+      //check if "id" parameter is available
+      const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+      //route = activated routes, snapshot = routes at this given moment, 
+      //paramMap = Map of all the route parameters and read the id parameter
 
     if(hasCategoryId) {
-      //get the "id" param string, convert string to number using the "+" symbol
+        //get the "id" param string, convert string to number using the "+" symbol
       this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+
+        //get the name param string
+      this.currentCategoryName = this.route.snapshot.paramMap.get('name')!;
     }
     else {
-      //no category id --> dafault id = 1
+        //no category id --> dafault id = 1
       this.currentCategoryId = 1;
+      this.currentCategoryName = "Books";
     }
 
-    //now ge the products for the give category id
+      //now get the products for the given category id
     this.productService.getProductList(this.currentCategoryId).subscribe(
       data => {
         console.log(data);
