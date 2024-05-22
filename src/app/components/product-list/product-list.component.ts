@@ -133,4 +133,11 @@ export class ProductListComponent implements OnInit {
     // refresh the page view
     this.listProduct();
   }
+
+  addToCart(product: Product) {
+
+    console.log(`Product: ${product.name}, price: ${product.unitPrice}`);
+    
+    //TODO - do the real work
+  }
 }
