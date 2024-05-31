@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { start } from '@popperjs/core';
+import { Country } from 'src/app/common/country';
+import { State } from 'src/app/common/state';
 import { ShopFormServiceService } from 'src/app/services/shop-form-service.service';
 
 @Component({
@@ -19,6 +21,9 @@ export class CheckoutComponent implements OnInit {
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
     
+  countries: Country[] = [];
+  states: State[] = [];
+
   constructor(private formBuilder: FormBuilder,
               private shopFormService: ShopFormServiceService
   ) {}
@@ -70,7 +75,19 @@ export class CheckoutComponent implements OnInit {
         console.log("Retrieved credit card years: " + data);
         this.creditCardYears = data;
       }
-    )
+    );
+
+    this.listCountry();
+    
+  }
+  listCountry() {
+    // populate the countries
+    this.shopFormService.getCountries().subscribe(
+      data => {
+        console.log("Retrieved countries: " + data);
+        this.countries = data;
+      }
+    );
   }
 
   onSubmit() {

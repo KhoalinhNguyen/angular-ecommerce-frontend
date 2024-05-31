@@ -20,7 +20,9 @@ constructor(public productService: ProductService) { }
   listProductCategories() {
     this.productService.getProductCategories().subscribe(
       data => {
-        console.log(`Product Categories ` + JSON.stringify(data));
+        console.log(data);
+        
+        //console.log(`Product Categories ` + JSON.stringify(data));
         this.productCategories = data
       }
     );

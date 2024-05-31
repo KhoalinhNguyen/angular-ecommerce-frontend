@@ -15,6 +15,7 @@ import { CartStatusComponent } from './components/cart-status/cart-status.compon
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ShopFormServiceService } from './services/shop-form-service.service';
 
 const routes: Routes = [
   // path to match      when path matches, create new instance of component
@@ -48,7 +49,7 @@ const routes: Routes = [
     NgbModule,
     ReactiveFormsModule
   ],
-  providers: [ProductService], // service in provider wiil be able to be injected by other components
+  providers: [ProductService, ShopFormServiceService], // service in provider will be able to be injected by other components
   bootstrap: [AppComponent]
 })
 export class AppModule { }
