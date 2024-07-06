@@ -45,9 +45,13 @@ function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector) {
 } 
 
 const routes: Routes = [
-  // path to match      when path matches, create new instance of component
+  // path to match when path matches, create new instance of component
+  {path: 'order-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard],
+    data: {onAuthRequired: sendToLoginPage} },
+
   {path: 'members', component: MembersPageComponent, canActivate: [OktaAuthGuard],
                     data: {onAuthRequired: sendToLoginPage} }, // if authenticated, give access, else send to login page
+
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'login', component: LoginComponent},
 

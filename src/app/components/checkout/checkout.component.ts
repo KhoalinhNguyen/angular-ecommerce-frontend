@@ -207,6 +207,7 @@ export class CheckoutComponent implements OnInit {
 
   resetCart() {
 
+    localStorage.clear();
     // reset cart data
     this.cartService.cartItems = [];
     // next publish the value to all subscriber
